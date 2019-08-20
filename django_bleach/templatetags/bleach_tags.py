@@ -30,4 +30,7 @@ register.filter('bleach', bleach_value)
 
 @register.filter
 def bleach_linkify(value):
+    if value is None:
+        return None
+
     return bleach.linkify(value, parse_email=True)
