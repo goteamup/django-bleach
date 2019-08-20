@@ -59,4 +59,7 @@ class BleachField(forms.CharField):
         """
         Strips any dodgy HTML tags from the input
         """
+        if val is None:
+            return None
+
         return bleach.clean(value, **self.bleach_options)
