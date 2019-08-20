@@ -27,14 +27,11 @@ class BleachField(models.TextField):
             self.bleach_kwargs['strip_comments'] = strip_comments
 
     def pre_save(self, model_instance, add):
+        val = getattr(model_instance, self.attname)
+        if self.null and val is None:
+            return None
+
         return clean(
-            getattr(model_instance, self.attname),
+            val,
             **self.bleach_kwargs
         )
-
-
-if 'south' in settings.INSTALLED_APPS:
-    from south.modelsinspector import add_introspection_rules
-    # Bleach attributes don't influence on data representation so we use
-    # default introspection rules of TextField
-    add_introspection_rules([], ['^django_bleach\.models\.BleachField'])
