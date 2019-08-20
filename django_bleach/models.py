@@ -28,7 +28,8 @@ class BleachField(models.TextField):
 
     def pre_save(self, model_instance, add):
         val = getattr(model_instance, self.attname)
-        if self.null and val is None:
+
+        if val is None:
             return None
 
         return clean(
