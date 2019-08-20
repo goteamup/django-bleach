@@ -23,6 +23,9 @@ for setting, kwarg in possible_settings.items():
 
 
 def bleach_value(value):
+    if value is None:
+        return None
+
     bleached_value = bleach.clean(value, **bleach_args)
     return mark_safe(bleached_value)
 
